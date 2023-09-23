@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import static com.unimag.encuestapp.domain.model.shared.constants.ExpressionsConstants.DATE_TIME_FORMAT;
 
@@ -28,6 +29,18 @@ public class CreateSurveyResponse implements Serializable {
     private boolean multiple;
     private String createAt;
     private String expirationAt;
+    private List<Option> options;
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder(toBuilder = true)
+    public static class Option implements Serializable {
+        private static final long serialVersionUID = -6330068045708056769L;
+        private long id;
+        private String name;
+    }
 
     /**
      * Of method
@@ -43,6 +56,13 @@ public class CreateSurveyResponse implements Serializable {
                 .multiple(survey.isMultiple())
                 .createAt(formatter.format(survey.getCreateAt().value()))
                 .expirationAt(formatter.format(survey.getExpirationAt().value()))
+                .options(survey.getOptions()
+                        .stream()
+                        .map(option -> Option.builder()
+                                .id(option.getId())
+                                .name(option.getName())
+                                .build())
+                        .toList())
                 .build();
     }
 }

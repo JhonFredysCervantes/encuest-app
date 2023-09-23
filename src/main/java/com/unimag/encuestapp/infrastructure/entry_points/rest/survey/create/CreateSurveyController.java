@@ -54,11 +54,11 @@ public class CreateSurveyController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = EncuestappError.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = EncuestappError.class)))})
-    @PostMapping("/survey")
+    @PostMapping("/surveys")
     public Mono<ResponseEntity<CreateSurveyResponse>> create(@RequestBody CreateSurveyRequest request) {
         var createSurveyCommand = objectMapper.convertValue(request, CreateSurveyCommand.class);
         return createSurvey.create(createSurveyCommand)
                 .map(CreateSurveyResponse::of)
-                .map(response -> ResponseEntity.created(URI.create("/survey/" + response.getId())).body(response));
+                .map(response -> ResponseEntity.created(URI.create("/surveys/" + response.getId())).body(response));
     }
 }

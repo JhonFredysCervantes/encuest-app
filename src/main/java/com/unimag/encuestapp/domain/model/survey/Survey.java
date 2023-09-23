@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * Survey domain
  */
@@ -21,4 +23,5 @@ public class Survey {
     private DateTimeSurvey createAt;
     private DateTimeSurvey deletedAt;
     private DateTimeSurvey expirationAt;
+    private List<Option> options;
 }

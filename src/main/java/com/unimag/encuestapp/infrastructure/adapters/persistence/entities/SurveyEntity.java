@@ -14,6 +14,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.unimag.encuestapp.domain.model.shared.util.DateTimeUtil.convertToDateViaInstant;
 import static com.unimag.encuestapp.domain.model.shared.util.DateTimeUtil.convertToLocalDateTimeViaInstant;
@@ -69,7 +70,7 @@ public class SurveyEntity {
      * @param survey The survey entity
      * @return The survey domain
      */
-    public static Survey toModel(SurveyEntity survey) {
+    public static Survey toModel(SurveyEntity survey, List<OptionEntity> options) {
         return Survey.builder()
                 .id(survey.getId())
                 .name(new SurveyName(survey.getName()))
@@ -77,6 +78,8 @@ public class SurveyEntity {
                 .multiple(survey.isMultiple())
                 .createAt(new DateTimeSurvey(convertToDateViaInstant(survey.getCreateAt())))
                 .deletedAt(new DateTimeSurvey(convertToDateViaInstant(survey.getDeletedAt())))
+                .options(options.stream().map(OptionEntity::toModel)
+                        .toList())
                 .build();
     }
 

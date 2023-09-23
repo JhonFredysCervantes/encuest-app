@@ -3,7 +3,8 @@ package com.unimag.encuestapp.infrastructure.entry_points.rest.error;
 import com.unimag.encuestapp.domain.model.shared.exceptions.EncuestappDateTimeFormatException;
 import com.unimag.encuestapp.domain.model.shared.exceptions.EncuestappError;
 import com.unimag.encuestapp.domain.model.shared.exceptions.EncuestappException;
-import com.unimag.encuestapp.domain.model.shared.exceptions.SurveyNameCouldNotBeNullOrEmptyException;
+import com.unimag.encuestapp.domain.model.shared.exceptions.OptionsShouldNotBeNullOrEmptyException;
+import com.unimag.encuestapp.domain.model.shared.exceptions.SurveyNameShouldNotBeNullOrEmptyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,8 @@ public class EcuestappHandlerError {
      * @param e The exception
      * @return Encuestapp error
      */
-    @ExceptionHandler({EncuestappDateTimeFormatException.class, SurveyNameCouldNotBeNullOrEmptyException.class})
+    @ExceptionHandler({EncuestappDateTimeFormatException.class, SurveyNameShouldNotBeNullOrEmptyException.class,
+            OptionsShouldNotBeNullOrEmptyException.class})
     public ResponseEntity<EncuestappError> badRequestHandler(EncuestappException e) {
         log.error("HANDLING ERROR: {}", e.toString());
         return new ResponseEntity<>(e.getError(), HttpStatus.BAD_REQUEST);

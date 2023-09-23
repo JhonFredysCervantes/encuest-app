@@ -1,6 +1,6 @@
 package com.unimag.encuestapp.domain.model.survey;
 
-import com.unimag.encuestapp.domain.model.shared.exceptions.SurveyNameCouldNotBeNullOrEmptyException;
+import com.unimag.encuestapp.domain.model.shared.exceptions.SurveyNameShouldNotBeNullOrEmptyException;
 import com.unimag.encuestapp.domain.model.shared.value.objects.StringValueObject;
 
 /**
@@ -18,7 +18,7 @@ public class SurveyName extends StringValueObject {
         super(value);
 
         if (value == null || value.trim().isEmpty()) {
-            throw new SurveyNameCouldNotBeNullOrEmptyException();
+            throw new SurveyNameShouldNotBeNullOrEmptyException();
         }
     }
 }
