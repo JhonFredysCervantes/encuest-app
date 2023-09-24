@@ -5,6 +5,7 @@ import com.unimag.encuestapp.domain.model.shared.exceptions.EncuestappError;
 import com.unimag.encuestapp.domain.model.shared.exceptions.EncuestappException;
 import com.unimag.encuestapp.domain.model.shared.exceptions.OptionsShouldNotBeNullOrEmptyException;
 import com.unimag.encuestapp.domain.model.shared.exceptions.SurveyNameShouldNotBeNullOrEmptyException;
+import com.unimag.encuestapp.domain.model.shared.exceptions.SurveyNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +53,17 @@ public class EcuestappHandlerError {
     public ResponseEntity<EncuestappError> badRequestHandler(EncuestappException e) {
         log.error("HANDLING ERROR: {}", e.toString());
         return new ResponseEntity<>(e.getError(), HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Not found handler
+     *
+     * @param e The exception
+     * @return Encuestapp error
+     */
+    @ExceptionHandler({SurveyNotFoundException.class})
+    public ResponseEntity<EncuestappError> notFoundHandler(EncuestappException e) {
+        log.error("HANDLING ERROR: {}", e.toString());
+        return new ResponseEntity<>(e.getError(), HttpStatus.NOT_FOUND);
     }
 }

@@ -47,4 +47,23 @@ public class SurveyPersistGatewayImp implements ISurveyPersistGateway {
         return surveySaved.zipWith(optionsSaved.collectList(), SurveyEntity::toModel);
 
     }
+
+    @Override
+    public Mono<Survey> findById(Long id) {
+
+        return surveyRepository.findById(id)
+                .map(surveyEntity -> optionSurveyRepository.findAllBySurveyId(surveyEntity.getId())
+                        .collectList()
+                        .map(optionEntities -> SurveyEntity.toModel(surveyEntity, optionEntities)))
+                .flatMap(Mono::from);
+    }
+
+    @Override
+    public Flux<Survey> findAll() {
+        return surveyRepository.findAll()
+                .map(surveyEntity -> optionSurveyRepository.findAllBySurveyId(surveyEntity.getId())
+                        .collectList()
+                        .map(optionEntities -> SurveyEntity.toModel(surveyEntity, optionEntities)))
+                .flatMap(Mono::from);
+    }
 }

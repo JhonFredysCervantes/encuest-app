@@ -2,7 +2,7 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR app
 
-ARG JAR_FILE=build/libs/encuestapp-0.0.1.jar
+ARG JAR_FILE=./build/libs/encuestapp-0.0.1.jar
 ARG PORT=8080
 
 ENV ENCUESTAPP_DATABASE=encuestapp
@@ -14,4 +14,4 @@ ENV ENCUESTAPP_USERNAME=root
 
 COPY ${JAR_FILE} app.jar
 
-ENTRYPOINT ["java","-jar","--server.port=${PORT}","/app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
